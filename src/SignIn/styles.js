@@ -19,8 +19,8 @@ export const dangNhapStyles = StyleSheet.create({
     button: {
         width: (width / 2) - (width / 8),
         height: height / 10,
-        borderWidth: 2,
-        borderColor: 'gray',
+        borderWidth: 1,
+        borderColor: 'white',
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -47,8 +47,8 @@ export const signInStyles = StyleSheet.create({
     button: {
         width: width / 2,
         height: height / 10,
-        borderColor: 'gray',
-        borderWidth: 2,
+        borderColor: 'white',
+        borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
