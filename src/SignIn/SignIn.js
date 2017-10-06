@@ -10,14 +10,19 @@ export default class SignIn extends Component {
             password: '',
         };
     }
+
+    dangNhap() {
+        this.props.navigation.navigate('MAIN');
+    }
+
     render() {
-        const {email, password} = this.state;
+        const { email, password } = this.state;
         const { container, input, button, buttonText } = signInStyles;
         return (
             <View style={container}>
-                <TextInput 
+                <TextInput
                     style={input}
-                    onChangeText={text => this.setState({email: text})}
+                    onChangeText={text => this.setState({ email: text })}
                     value={email}
                     placeholder='Enter your email'
                     placeholderTextColor='white'
@@ -25,16 +30,16 @@ export default class SignIn extends Component {
                     returnKeyType='next'
                     underlineColorAndroid='transparent'
                 />
-                <TextInput 
+                <TextInput
                     style={input}
-                    onChangeText={text => this.setState({password: text})}
+                    onChangeText={text => this.setState({ password: text })}
                     value={password}
                     placeholder='Enter your password'
                     placeholderTextColor='white'
-                    underlineColorAndroid='transparent'                    
+                    underlineColorAndroid='transparent'
                     secureTextEntry
                 />
-                <TouchableOpacity style={button}>
+                <TouchableOpacity style={button} onPress={() => this.dangNhap()}>
                     <Text style={buttonText}>SIGN IN</Text>
                 </TouchableOpacity>
             </View>

@@ -9,18 +9,19 @@ export default class DangNhap extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fragment: <SignIn />
+            fragment: <SignIn navigation={props.navigation} />
         };
     }
     replaceFragment(mode) {
+        const { navigation } = this.props;
         if (mode === 0) {
             this.setState({
-                fragment: <SignIn />
-            })
+                fragment: <SignIn navigation={navigation} />
+            });
         } else if (mode === 1) {
             this.setState({
                 fragment: <SignUp />
-            })
+            });
         }
     }
 
@@ -39,7 +40,7 @@ export default class DangNhap extends Component {
                     >
                         <Text style={buttonText}>SIGN IN</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style={button}
                         onPress={() => this.replaceFragment(1)}
                     >
@@ -50,5 +51,3 @@ export default class DangNhap extends Component {
         );
     }
 }
-
-
