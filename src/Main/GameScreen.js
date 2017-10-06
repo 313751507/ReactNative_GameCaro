@@ -1,44 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Image } from 'react-native';
+import pic from '../images/irina.jpg';
 
-import RowButton from './RowButton';
+import LeftContainer from './LeftContainer';
+import RightContainer from './RightContainer';
+import { mainStyles } from './styles';
 
 export default class GameScreen extends Component {
   render() {
-    const { container, leftContainer, rightContainer } = styles;
+    const { container, leftContainer, rightContainer } = mainStyles;
     return (
-      <View style={container}>
-        <View style={leftContainer}></View>
-        <View style={rightContainer}>
-          <RowButton row={0}/>
-          <RowButton row={1}/>
-          <RowButton row={2}/>
-          <RowButton row={3}/>
-          <RowButton row={4}/>
-          <RowButton row={5}/>
-          <RowButton row={6}/>
-          <RowButton row={7}/>
-          <RowButton row={8}/>
-          <RowButton row={9}/>
-          <RowButton row={10}/>
-        </View>
-      </View>
+      <Image style={container} source={pic}>
+        <LeftContainer style={leftContainer} />
+        <RightContainer style={rightContainer} />
+      </Image>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'lightgray',
-    flexDirection: 'row'
-  },
-  leftContainer: {
-    flex: 2,
-    backgroundColor: 'yellow'
-  },
-  rightContainer: {
-    flex: 8,
-    backgroundColor: 'lightgreen'
-  }
-});

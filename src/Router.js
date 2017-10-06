@@ -4,7 +4,7 @@ import GameScreen from './Main/GameScreen';
 
 const MainStack = StackNavigator({
     DANG_NHAP: {
-        screen: DangNhap,
+        screen: GameScreen,
         navigationOptions: {
             header: false
         }
