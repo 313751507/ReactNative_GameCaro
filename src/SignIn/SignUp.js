@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
-import {signUpStyles, signInStyles} from './styles';
+import { signUpStyles, signInStyles } from './styles';
 
 export default class SignUp extends Component {
     constructor(props) {
@@ -13,14 +13,14 @@ export default class SignUp extends Component {
         };
     }
     render() {
-        const {input, button, buttonText} = signInStyles;
-        const {container} = signUpStyles;
-        const {email, name, password, repassword} = this.state;
+        const { input, button, buttonText } = signInStyles;
+        const { container } = signUpStyles;
+        const { email, name, password, repassword } = this.state;
         return (
             <View style={container}>
-                <TextInput 
+                <TextInput
                     style={input}
-                    onChangeText={text => this.setState({email: text})}
+                    onChangeText={text => this.setState({ email: text })}
                     value={email}
                     placeholder='Enter your email'
                     placeholderTextColor='white'
@@ -28,9 +28,9 @@ export default class SignUp extends Component {
                     returnKeyType='next'
                     underlineColorAndroid='transparent'
                 />
-                <TextInput 
+                <TextInput
                     style={input}
-                    onChangeText={text => this.setState({name: text})}
+                    onChangeText={text => this.setState({ name: text })}
                     value={name}
                     placeholder='Enter your name'
                     placeholderTextColor='white'
@@ -38,22 +38,22 @@ export default class SignUp extends Component {
                     returnKeyType='next'
                     underlineColorAndroid='transparent'
                 />
-                <TextInput 
+                <TextInput
                     style={input}
-                    onChangeText={text => this.setState({password: text})}
+                    onChangeText={text => this.setState({ password: text })}
                     value={password}
                     placeholder='Enter your password'
                     placeholderTextColor='white'
-                    underlineColorAndroid='transparent'                    
+                    underlineColorAndroid='transparent'
                     secureTextEntry
                 />
-                <TextInput 
+                <TextInput
                     style={input}
-                    onChangeText={text => this.setState({repassword: text})}
+                    onChangeText={text => this.setState({ repassword: text })}
                     value={repassword}
                     placeholder='Confirm your password'
                     placeholderTextColor='white'
-                    underlineColorAndroid='transparent'                    
+                    underlineColorAndroid='transparent'
                     secureTextEntry
                 />
                 <TouchableOpacity style={button}>

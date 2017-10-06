@@ -8,11 +8,11 @@ import { mainStyles } from './styles';
 
 export default class GameScreen extends Component {
   render() {
-    const { container, leftContainer, rightContainer } = mainStyles;
+    const { container } = mainStyles;
     return (
       <Image style={container} source={pic}>
-        <LeftContainer style={leftContainer} />
-        <RightContainer style={rightContainer} />
+        <LeftContainer />
+        <RightContainer />
       </Image>
     );
   }

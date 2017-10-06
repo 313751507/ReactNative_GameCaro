@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 export const dangNhapStyles = StyleSheet.create({
     container: {
         flex: 1,
@@ -13,7 +13,7 @@ export const dangNhapStyles = StyleSheet.create({
     footer: {
         flex: 2,
         flexDirection: 'row',
-        alignItems:'center',
+        alignItems: 'center',
         justifyContent: 'space-around'
     },
     button: {
