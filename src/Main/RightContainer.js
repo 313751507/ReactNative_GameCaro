@@ -13,7 +13,6 @@ export default class RightContainer extends Component {
     }
     render() {
         const { container } = mapContainer;
-        console.log(container);
         return (
             <View style={container}>
                 {this.createRows(11)}

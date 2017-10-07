@@ -18,6 +18,16 @@ export const leftContainer = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
     },
+    backButton: {
+        width: (width * 0.2) - (width * 0.01),
+        borderWidth: 1,
+        borderColor: 'white',
+        alignItems: 'center',
+        padding: 8
+    },
+    backButtonText: {
+        color: 'white'
+    },
     title: {
         fontSize: 24,
         color: 'white'

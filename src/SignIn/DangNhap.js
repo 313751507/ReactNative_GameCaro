@@ -12,10 +12,16 @@ export default class DangNhap extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fragment: <SignIn navigation={props.navigation} onReceive={data => this.onReceive(data)} />
+            fragment: <SignIn onReceive={data => this.onReceive(data)} />
         };
         global.socket.on('SERVER_SEND_DANG_KY', data => this.onReceive(data));
-        global.socket.on('SERVER_SEND_DANG_NHAP', data => this.onReceive(data));
+        global.socket.on('SERVER_SEND_DANG_NHAP_THAT_BAI', data => this.onReceive(data));
+        global.socket.on('SERVER_SEND_DANG_NHAP_THANH_CONG', info => this.onSuccess(info));
+    }
+
+    onSuccess(info) {
+        const { navigation } = this.props;
+        navigation.navigate('MAIN', { info });
     }
 
     onReceive(data) {
@@ -27,10 +33,9 @@ export default class DangNhap extends Component {
     }
 
     replaceFragment(mode) {
-        const { navigation } = this.props;
         if (mode === 0) {
             this.setState({
-                fragment: <SignIn navigation={navigation} onReceive={data => this.onReceive(data)} />
+                fragment: <SignIn onReceive={data => this.onReceive(data)} />
             });
         } else if (mode === 1) {
             this.setState({

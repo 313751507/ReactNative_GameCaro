@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     View, Text, FlatList, TouchableOpacity
 } from 'react-native';
-
+import global from '../Global';
 import { leftContainer } from './styles';
 
 export default class LeftContainer extends Component {
@@ -21,6 +21,14 @@ export default class LeftContainer extends Component {
             ],
         };
     }
+
+    goBack() {
+        const { navigation } = this.props;        
+        const { name, email } = navigation.state.params.info;
+        global.socket.emit('USER_DANG_XUAT', { name, email });
+        navigation.goBack();
+    }
+
     renderItem(item) {
         const { button, buttonText } = leftContainer;
         return (
@@ -29,12 +37,16 @@ export default class LeftContainer extends Component {
             </TouchableOpacity>
         );
     }
+
     render() {
-        const { container, title } = leftContainer;
+        const { container, title, backButton, backButtonText } = leftContainer;
         const { ds } = this.state;
         return (
             <View style={container}>
-                <Text style={title}>Users online</Text>
+                <TouchableOpacity style={backButton} onPress={this.goBack.bind(this)}>
+                    <Text style={backButtonText}>EXIT</Text>
+                </TouchableOpacity>
+                <Text style={title}>LIST USERS</Text>
                 <FlatList
                     data={ds}
                     renderItem={({ item }) => this.renderItem(item)}
