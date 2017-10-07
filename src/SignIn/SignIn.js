@@ -13,7 +13,12 @@ export default class SignIn extends Component {
     }
 
     dangNhap() {
-        
+        const { onReceive } = this.props;
+        const { email, password } = this.state;
+        if (email === '' || password === '') {
+            onReceive('VUI LONG NHAP THONG TIN DAY DU');
+        }
+        global.socket.emit('USER_DANG_NHAP', { email, password });
     }
 
     render() {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { signUpStyles, signInStyles } from './styles';
 import global from '../Global';
 
@@ -12,23 +12,15 @@ export default class SignUp extends Component {
             password: '',
             repassword: ''
         };
-        global.socket.on('SERVER_SEND_DANG_KY', data => this.onReceive(data));
-    }
-
-    onReceive(data) {
-        Alert.alert('THONG BAO',
-            data,
-            [{ text: 'OK' }],
-            { cancelable: false }
-        );
     }
 
     dangKy() {
+        const { onReceive } = this.props;
         const { name, email, password, repassword } = this.state;
         if (name === '' || email === '' || password === '' || repassword === '') {
-            this.onReceive('VUI LONG NHAP THONG TIN DAY DU');
+            onReceive('VUI LONG NHAP THONG TIN DAY DU');
         } else if (password !== repassword) {
-            this.onReceive('MAT KHAU KHONG HOP LE');
+            onReceive('MAT KHAU KHONG HOP LE');
         } else {
             global.socket.emit('USER_DANG_KY', { email, name, password });
         }
