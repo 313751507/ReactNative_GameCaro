@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { signUpStyles, signInStyles } from './styles';
+import global from '../Global';
 
 export default class SignUp extends Component {
     constructor(props) {
@@ -11,7 +12,28 @@ export default class SignUp extends Component {
             password: '',
             repassword: ''
         };
+        global.socket.on('SERVER_SEND_DANG_KY', data => this.onReceive(data));
     }
+
+    onReceive(data) {
+        Alert.alert('THONG BAO',
+            data,
+            [{ text: 'OK' }],
+            { cancelable: false }
+        );
+    }
+
+    dangKy() {
+        const { name, email, password, repassword } = this.state;
+        if (name === '' || email === '' || password === '' || repassword === '') {
+            this.onReceive('VUI LONG NHAP THONG TIN DAY DU');
+        } else if (password !== repassword) {
+            this.onReceive('MAT KHAU KHONG HOP LE');
+        } else {
+            global.socket.emit('USER_DANG_KY', { email, name, password });
+        }
+    }
+
     render() {
         const { input, button, buttonText } = signInStyles;
         const { container } = signUpStyles;
@@ -56,7 +78,7 @@ export default class SignUp extends Component {
                     underlineColorAndroid='transparent'
                     secureTextEntry
                 />
-                <TouchableOpacity style={button}>
+                <TouchableOpacity style={button} onPress={this.dangKy.bind(this)}>
                     <Text style={buttonText}>SIGN UP</Text>
                 </TouchableOpacity>
             </View>

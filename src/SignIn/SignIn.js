@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { signInStyles } from './styles';
+import global from '../Global';
 
 export default class SignIn extends Component {
     constructor(props) {
@@ -12,7 +13,7 @@ export default class SignIn extends Component {
     }
 
     dangNhap() {
-        this.props.navigation.navigate('MAIN');
+        
     }
 
     render() {

@@ -7,7 +7,7 @@ const MainStack = StackNavigator({
         screen: DangNhap,
         navigationOptions: {
             header: false
-        }
+        },
     },
     MAIN: {
         screen: GameScreen,
