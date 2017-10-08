@@ -23,19 +23,19 @@ export const leftContainer = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'white',
         alignItems: 'center',
-        padding: 8
+        padding: width / 100
     },
     backButtonText: {
         color: 'white'
     },
     title: {
-        fontSize: 24,
+        fontSize: width / 32,
         color: 'white'
     },
     button: {
         borderWidth: 1,
         borderColor: 'white',
-        padding: 4,
+        padding: width / 200,
         width: (width / 5) - (width / 80),
         alignItems: 'center'
     },

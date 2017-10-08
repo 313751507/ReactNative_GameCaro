@@ -8,22 +8,37 @@ import { leftContainer } from './styles';
 export default class LeftContainer extends Component {
     constructor(props) {
         super(props);
+        const { users } = props.navigation.state.params.info;
         this.state = {
-            ds: [
-                { id: 1, name: 'Ronaldo' }, { id: 2, name: 'Messi' },
-                { id: 3, name: 'Ibrahimovic' }, { id: 4, name: 'Rooney' },
-                { id: 5, name: 'Chicharito' }, { id: 6, name: 'Lukaku' },
-                { id: 7, name: 'Hazard' }, { id: 8, name: 'Robben' },
-                { id: 9, name: 'Ronaldo' }, { id: 10, name: 'Messi' },
-                { id: 11, name: 'Ibrahimovic' }, { id: 12, name: 'Rooney' },
-                { id: 13, name: 'Chicharito' }, { id: 14, name: 'Lukaku' },
-                { id: 15, name: 'Hazard' }, { id: 16, name: 'Robben' }
-            ],
+            ds: users,
         };
     }
 
+    componentDidMount() {
+        // Lắng nghe user mới đăng nhập thành công.
+        global.socket.on('SERVER_SEND_USER_INFO', info => this.onUserSignIn(info));
+        // Lắng nghe user đăng xuất 
+        global.socket.on('SERVER_SEND_USER_DANG_XUAT', info => this.onUserExit(info));
+    }
+
+    onUserSignIn(info) {
+        const { email, name } = info;
+        const { ds } = this.state;
+        this.setState({
+            ds: [...ds, { email, name }]
+        });
+    }
+
+    onUserExit(info) {
+        const { email } = info;
+        const { ds } = this.state;
+        this.setState({
+            ds: ds.filter(e => e.email !== email)
+        });
+    }
+
     goBack() {
-        const { navigation } = this.props;        
+        const { navigation } = this.props;
         const { name, email } = navigation.state.params.info;
         global.socket.emit('USER_DANG_XUAT', { name, email });
         navigation.goBack();
@@ -40,7 +55,6 @@ export default class LeftContainer extends Component {
 
     render() {
         const { container, title, backButton, backButtonText } = leftContainer;
-        const { ds } = this.state;
         return (
             <View style={container}>
                 <TouchableOpacity style={backButton} onPress={this.goBack.bind(this)}>
@@ -48,9 +62,9 @@ export default class LeftContainer extends Component {
                 </TouchableOpacity>
                 <Text style={title}>LIST USERS</Text>
                 <FlatList
-                    data={ds}
+                    data={this.state.ds}
                     renderItem={({ item }) => this.renderItem(item)}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item.email}
                 />
             </View>
         );
