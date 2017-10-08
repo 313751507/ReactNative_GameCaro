@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
+import Button from './Button';
 import { rowStyles } from './styles';
 
 const buttonAmounts = 16;
 export default class RowButton extends Component {
-    clickButton(row, col) {
-        console.log(`${row} -   ${col}`);
+    constructor(props) {
+        super(props);
+        this.state = {
+            img: null
+        };
     }
 
     drawRow() {
         const { row } = this.props;
         const buttons = [];
-        const { button } = rowStyles;
         for (let i = 0; i < buttonAmounts; i++) {
             buttons.push(
-                <TouchableOpacity
-                    style={button}
-                    key={i} onPress={() => this.clickButton(row, i)}
-                />
+                <Button row={row} i={i} key={i} />
             );
         }
         return buttons;

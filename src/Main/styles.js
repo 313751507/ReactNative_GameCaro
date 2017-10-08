@@ -59,5 +59,9 @@ export const rowStyles = StyleSheet.create({
         height: buttonWidth,
         borderWidth: 1,
         borderColor: 'white'
+    },
+    icon: {
+        width: buttonWidth,
+        height: buttonWidth
     }
 });

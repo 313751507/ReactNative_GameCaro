@@ -39,8 +39,7 @@ export default class LeftContainer extends Component {
 
     goBack() {
         const { navigation } = this.props;
-        const { name, email } = navigation.state.params.info;
-        global.socket.emit('USER_DANG_XUAT', { name, email });
+        global.socket.emit('USER_DANG_XUAT');
         navigation.goBack();
     }
 

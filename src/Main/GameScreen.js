@@ -11,7 +11,7 @@ export default class GameScreen extends Component {
     const { container } = mainStyles;
     return (
       <Image style={container} source={pic}>
-        <LeftContainer navigation={this.props.navigation} />
+        {<LeftContainer navigation={this.props.navigation} />}
         <RightContainer />
       </Image>
     );
