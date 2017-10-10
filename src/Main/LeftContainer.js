@@ -43,10 +43,19 @@ export default class LeftContainer extends Component {
         navigation.goBack();
     }
 
+    clickItem(item) {
+        const { name, email } = item;
+        if (name === this.props.navigation.state.params.info.name) {
+            console.log('NGU NHU BO');
+        } else {
+            global.socket.emit('USER_SEND_THACH_DAU', email);
+        }
+    }
+
     renderItem(item) {
         const { button, buttonText } = leftContainer;
         return (
-            <TouchableOpacity style={button}>
+            <TouchableOpacity style={button} onPress={() => this.clickItem(item)}>
                 <Text style={buttonText}>{item.name}</Text>
             </TouchableOpacity>
         );

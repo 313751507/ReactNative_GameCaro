@@ -7,7 +7,7 @@ import global from './Global';
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.socket = SocketIOClient('http://192.168.0.106:3000');
+    this.socket = SocketIOClient('http://192.168.20.105:3000');
     global.socket = this.socket;
   }
   render() {
