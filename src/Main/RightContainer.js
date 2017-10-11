@@ -13,9 +13,11 @@ export default class RightContainer extends Component {
     }
     render() {
         const { container } = mapContainer;
+        const { isPlaying } = this.props;
+        const theRight = isPlaying ? this.createRows(11) : <View style={container} />;
         return (
             <View style={container}>
-                {this.createRows(11)}
+                {theRight}
             </View>
         );
     }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View, Text, FlatList, TouchableOpacity
+    View, Text, FlatList, TouchableOpacity, ToastAndroid
 } from 'react-native';
 import global from '../Global';
 import { leftContainer } from './styles';
@@ -45,10 +45,15 @@ export default class LeftContainer extends Component {
 
     clickItem(item) {
         const { name, email } = item;
-        if (name === this.props.navigation.state.params.info.name) {
-            console.log('NGU NHU BO');
+        const { isPlaying } = this.props;
+        if (!isPlaying) {
+            if (name === this.props.navigation.state.params.info.name) {
+                console.log('NGU NHU BO');
+            } else {
+                global.socket.emit('USER_SEND_THACH_DAU', email);
+            }
         } else {
-            global.socket.emit('USER_SEND_THACH_DAU', email);
+            ToastAndroid.show('DANG CHOI ROI', ToastAndroid.SHORT);
         }
     }
 
