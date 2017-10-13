@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import {
     View, Text, FlatList, TouchableOpacity, ToastAndroid
 } from 'react-native';
-import global from '../Global';
+import {connect} from 'react-redux';
 import { leftContainer } from './styles';
 
-export default class LeftContainer extends Component {
+class LeftContainer extends Component {
     constructor(props) {
         super(props);
         const { users } = props.navigation.state.params.info;
@@ -15,10 +15,11 @@ export default class LeftContainer extends Component {
     }
 
     componentDidMount() {
+        const {socket} = this.props;
         // Lắng nghe user mới đăng nhập thành công.
-        global.socket.on('SERVER_SEND_USER_INFO', info => this.onUserSignIn(info));
+        socket.on('SERVER_SEND_USER_INFO', info => this.onUserSignIn(info));
         // Lắng nghe user đăng xuất 
-        global.socket.on('SERVER_SEND_USER_DANG_XUAT', info => this.onUserExit(info));
+        socket.on('SERVER_SEND_USER_DANG_XUAT', info => this.onUserExit(info));
     }
 
     onUserSignIn(info) {
@@ -38,19 +39,19 @@ export default class LeftContainer extends Component {
     }
 
     goBack() {
-        const { navigation } = this.props;
-        global.socket.emit('USER_DANG_XUAT');
+        const { navigation, socket } = this.props;
+        socket.emit('USER_DANG_XUAT');
         navigation.goBack();
     }
 
     clickItem(item) {
         const { name, email } = item;
-        const { isPlaying } = this.props;
+        const { isPlaying, socket } = this.props;
         if (!isPlaying) {
             if (name === this.props.navigation.state.params.info.name) {
-                console.log('NGU NHU BO');
+                ToastAndroid.show('NGU NHU BO', ToastAndroid.SHORT);
             } else {
-                global.socket.emit('USER_SEND_THACH_DAU', email);
+                socket.emit('USER_SEND_THACH_DAU', email);
             }
         } else {
             ToastAndroid.show('DANG CHOI ROI', ToastAndroid.SHORT);
@@ -83,3 +84,9 @@ export default class LeftContainer extends Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {socket: state.socket};
+}
+
+export default connect(mapStateToProps)(LeftContainer);

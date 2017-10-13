@@ -2,21 +2,27 @@ import React, { Component } from 'react';
 import {
     View, Text, TouchableOpacity, Image, Alert
 } from 'react-native';
+import { connect } from 'react-redux';
+
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import { dangNhapStyles } from './styles';
 import pic from '../images/irina.jpg';
-import global from '../Global';
 
-export default class DangNhap extends Component {
+class DangNhap extends Component {
     constructor(props) {
         super(props);
         this.state = {
             fragment: <SignIn onReceive={data => this.onReceive(data)} />
         };
-        global.socket.on('SERVER_SEND_DANG_KY', data => this.onReceive(data));
-        global.socket.on('SERVER_SEND_DANG_NHAP_THAT_BAI', data => this.onReceive(data));
-        global.socket.on('SERVER_SEND_DANG_NHAP_THANH_CONG', info => this.onSuccess(info));
+        
+    }
+
+    componentDidMount() {
+        const {socket} = this.props;
+        socket.on('SERVER_SEND_DANG_KY', data => this.onReceive(data));
+        socket.on('SERVER_SEND_DANG_NHAP_THAT_BAI', data => this.onReceive(data));
+        socket.on('SERVER_SEND_DANG_NHAP_THANH_CONG', info => this.onSuccess(info));
     }
 
     onSuccess(info) {
@@ -70,3 +76,9 @@ export default class DangNhap extends Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return { socket: state.socket };
+}
+
+export default connect(mapStateToProps)(DangNhap);

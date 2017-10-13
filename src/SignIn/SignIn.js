@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { connect } from 'react-redux';
 import { signInStyles } from './styles';
-import global from '../Global';
 
-export default class SignIn extends Component {
+class SignIn extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,7 +18,7 @@ export default class SignIn extends Component {
         if (email === '' || password === '') {
             onReceive('VUI LONG NHAP THONG TIN DAY DU');
         }
-        global.socket.emit('USER_DANG_NHAP', { email, password });
+        this.props.socket.emit('USER_DANG_NHAP', { email, password });
     }
 
     render() {
@@ -52,3 +52,9 @@ export default class SignIn extends Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return { socket: state.socket };
+}
+
+export default connect(mapStateToProps)(SignIn);

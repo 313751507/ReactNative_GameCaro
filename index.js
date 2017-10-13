@@ -1,4 +1,4 @@
 import { AppRegistry } from 'react-native';
-import App from './src/App';
+import MainIndex from './src/MainIndex';
 
-AppRegistry.registerComponent('GameCaro', () => App);
+AppRegistry.registerComponent('GameCaro', () => MainIndex);

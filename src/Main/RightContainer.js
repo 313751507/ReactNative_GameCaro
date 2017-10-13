@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import {connect} from 'react-redux';
 import { mapContainer } from './styles';
 import RowButton from './RowButton';
 
-export default class RightContainer extends Component {
+class RightContainer extends Component {
     createRows(amount) {
         const mang = [];
         for (let i = 0; i < amount; i++) {
@@ -22,3 +23,9 @@ export default class RightContainer extends Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return state;
+}
+
+export default connect(mapStateToProps)(RightContainer);

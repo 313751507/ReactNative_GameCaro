@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
 import { Image, Alert } from 'react-native';
+import {connect} from 'react-redux';
 import pic from '../images/irina.jpg';
-
 import LeftContainer from './LeftContainer';
 import RightContainer from './RightContainer';
 import { mainStyles } from './styles';
-import global from '../Global';
 
-export default class GameScreen extends Component {
+class GameScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isPlaying: false,
       idEnemy: undefined
     };
-    global.socket.on('SERVER_SEND_THACH_DAU', id => this.onReceiveThachDau(id));
-    global.socket.on('SERVER_SEND_REPLY_THACH_DAU', answer => this.onReceiveReply(answer));
+
+  }
+
+  componentDidMount() {
+    const {socket} = this.props;
+    socket.on('SERVER_SEND_THACH_DAU', id => this.onReceiveThachDau(id));
+    socket.on('SERVER_SEND_REPLY_THACH_DAU', answer => this.onReceiveReply(answer));
   }
 
   onReceiveReply(answer) {
@@ -46,7 +50,6 @@ export default class GameScreen extends Component {
   }
 
   reply(id, value) {
-    //console.log(id + '--' + value);
     if (value === 'YES') {
       this.setState({
         isPlaying: true
@@ -56,17 +59,23 @@ export default class GameScreen extends Component {
         idEnemy: undefined
       });
     }
-    global.socket.emit('USER_REPLY_THACH_DAU', { id, value });
+    this.props.socket.emit('USER_REPLY_THACH_DAU', { id, value });
   }
 
   render() {
     const { container } = mainStyles;
-    const { isPlaying } = this.state;
+    const { isPlaying, idEnemy } = this.state;
     return (
       <Image style={container} source={pic}>
         <LeftContainer navigation={this.props.navigation} isPlaying={isPlaying} />
-        <RightContainer isPlaying={isPlaying} />
+        <RightContainer isPlaying={isPlaying} idEnemy={idEnemy} />
       </Image>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {socket: state.socket};
+}
+
+export default connect(mapStateToProps)(GameScreen);
