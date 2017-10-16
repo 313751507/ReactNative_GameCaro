@@ -1,8 +1,9 @@
 import { createStore } from 'redux';
 import SocketIOClient from 'socket.io-client';
+import ipAddress from '../api/ipaddress';
 
 const defaultState = {
-  socket: SocketIOClient('http://192.168.1.109:3000'),
+  socket: SocketIOClient(`http://${ipAddress}`),
   dsUser: [],
   isLogin: false,
   isPlaying: false
@@ -15,6 +16,9 @@ const reducer = (state = defaultState, action) => {
   }
   if (action.type === 'CHANGE_LOGIN_STATE') {
     return { ...state, isLogin: !state.isLogin, dsUser: action.ds };
+  }
+  if (action.type === 'TOGGLE_PLAYING_STATE') {
+    return { ...state, isPlaying: !state.isPlaying };
   }
   return state;
 };

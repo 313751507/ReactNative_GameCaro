@@ -4,7 +4,7 @@ import MainStack from './Router';
 
 class App extends Component {
   componentDidMount() {
-    const { socket, dispatch, isLogin } = this.props;
+    const { socket, dispatch } = this.props;
     socket.on('SERVER_SEND_USER_INFO', data => {
       if (this.props.isLogin) dispatch({ type: 'UPDATE_DS_USER', data });
     });

@@ -1,4 +1,6 @@
-const apiSignUp = (email, name, password) => fetch('http://192.168.1.109:3000/dangky', {
+import ipAddress from './ipaddress';
+
+const apiSignUp = (email, name, password) => fetch(`http://${ipAddress}/dangky`, {
     method: 'POST',
     headers: {
         Accept: 'application/json',

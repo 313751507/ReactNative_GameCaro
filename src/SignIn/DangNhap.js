@@ -26,7 +26,9 @@ class DangNhap extends Component {
     onSuccess(ds) {
         const { navigation, dispatch } = this.props;
         dispatch({ type: 'CHANGE_LOGIN_STATE', ds });
-        navigation.navigate('MAIN');
+
+        //Gửi email và name sang GameScreen.
+        navigation.navigate('MAIN', ds[ds.length - 1]);
     }
 
     replaceFragment(mode) {
