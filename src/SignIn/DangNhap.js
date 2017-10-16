@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
-    View, Text, TouchableOpacity, Image, Alert
+    View, Text, TouchableOpacity, Image
 } from 'react-native';
 import { connect } from 'react-redux';
-
+import { onReceive } from '../Global';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import { dangNhapStyles } from './styles';
@@ -13,39 +13,30 @@ class DangNhap extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fragment: <SignIn onReceive={data => this.onReceive(data)} />
+            fragment: <SignIn />
         };
-        
     }
 
     componentDidMount() {
-        const {socket} = this.props;
-        socket.on('SERVER_SEND_DANG_KY', data => this.onReceive(data));
-        socket.on('SERVER_SEND_DANG_NHAP_THAT_BAI', data => this.onReceive(data));
-        socket.on('SERVER_SEND_DANG_NHAP_THANH_CONG', info => this.onSuccess(info));
+        const { socket } = this.props;
+        socket.on('SERVER_SEND_DANG_NHAP_THAT_BAI', data => onReceive(data));
+        socket.on('SERVER_SEND_DANG_NHAP_THANH_CONG', ds => this.onSuccess(ds));
     }
 
-    onSuccess(info) {
-        const { navigation } = this.props;
-        navigation.navigate('MAIN', { info });
-    }
-
-    onReceive(data) {
-        Alert.alert('THONG BAO',
-            data,
-            [{ text: 'OK' }],
-            { cancelable: false }
-        );
+    onSuccess(ds) {
+        const { navigation, dispatch } = this.props;
+        dispatch({ type: 'CHANGE_LOGIN_STATE', ds });
+        navigation.navigate('MAIN');
     }
 
     replaceFragment(mode) {
         if (mode === 0) {
             this.setState({
-                fragment: <SignIn onReceive={data => this.onReceive(data)} />
+                fragment: <SignIn />
             });
         } else if (mode === 1) {
             this.setState({
-                fragment: <SignUp onReceive={data => this.onReceive(data)} />
+                fragment: <SignUp />
             });
         }
     }

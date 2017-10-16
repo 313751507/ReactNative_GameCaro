@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { signInStyles } from './styles';
 
@@ -12,13 +12,18 @@ class SignIn extends Component {
         };
     }
 
+    onReceive(data) {
+        Alert.alert('Thông báo', data,
+            [{ text: 'OK' }],
+            { cancelable: false });
+    }
+
     dangNhap() {
-        const { onReceive } = this.props;
         const { email, password } = this.state;
         if (email === '' || password === '') {
-            onReceive('VUI LONG NHAP THONG TIN DAY DU');
+            this.onReceive('Nhập thông tin đẩy đủ');
         }
-        this.props.socket.emit('USER_DANG_NHAP', { email, password });
+        this.props.socket.emit('USER_SEND_DANG_NHAP', { email, password });
     }
 
     render() {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
-import {connect} from 'react-redux';
+import { View, Text, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { signUpStyles, signInStyles } from './styles';
+import apiSignUp from '../api/apiSignUp';
 
 class SignUp extends Component {
     constructor(props) {
@@ -14,15 +14,23 @@ class SignUp extends Component {
         };
     }
 
+    onReceive(data) {
+        Alert.alert('Thông báo', data,
+            [{ text: 'OK' }],
+            { cancelable: false });
+    }
+
     dangKy() {
-        const { onReceive, socket } = this.props;
         const { name, email, password, repassword } = this.state;
         if (name === '' || email === '' || password === '' || repassword === '') {
-            onReceive('VUI LONG NHAP THONG TIN DAY DU');
+            this.onReceive('Nhập thông tin đầy đủ.');
         } else if (password !== repassword) {
-            onReceive('MAT KHAU KHONG HOP LE');
+            this.onReceive('Mật khẩu không hợp lệ.');
         } else {
-            socket.emit('USER_DANG_KY', { email, name, password });
+            apiSignUp(email, name, password)
+                .then(res => res.text())
+                .then(text => this.onReceive(text))
+                .catch(err => console.log(err));
         }
     }
 
@@ -78,8 +86,4 @@ class SignUp extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return { socket: state.socket };
-}
-
-export default connect(mapStateToProps)(SignUp);
+export default SignUp;
