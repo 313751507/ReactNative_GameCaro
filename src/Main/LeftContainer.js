@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { leftContainer } from './styles';
-import { onReceive } from '../Global';
+import { simpleAlert } from '../Global';
 
 class LeftContainer extends Component {
     constructor(props) {
@@ -22,15 +22,16 @@ class LeftContainer extends Component {
     }
 
     clickItem(item) {
-        if (!this.props.isPlaying) {
+        const { isPlaying, socket } = this.props;
+        if (!isPlaying) {
             const { id, email } = item;
             if (email === this.user.email) {
-                onReceive('Không thể mời người này...');
+                simpleAlert('Không thể mời người này...');
             } else {
-                this.props.socket.emit('USER_SEND_THACH_DAU', id);
+                socket.emit('USER_SEND_THACH_DAU', id);
             }
         } else {
-            onReceive('Đang chơi sao mời được he!');
+            simpleAlert('Đang chơi sao mời được he!');
         }
     }
 

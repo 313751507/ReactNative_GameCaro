@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { signUpStyles, signInStyles } from './styles';
 import apiSignUp from '../api/apiSignUp';
+import { simpleAlert } from '../Global';
 
 class SignUp extends Component {
     constructor(props) {
@@ -14,22 +15,16 @@ class SignUp extends Component {
         };
     }
 
-    onReceive(data) {
-        Alert.alert('Thông báo', data,
-            [{ text: 'OK' }],
-            { cancelable: false });
-    }
-
     dangKy() {
         const { name, email, password, repassword } = this.state;
         if (name === '' || email === '' || password === '' || repassword === '') {
-            this.onReceive('Nhập thông tin đầy đủ.');
+            simpleAlert('Nhập thông tin đầy đủ.');
         } else if (password !== repassword) {
-            this.onReceive('Mật khẩu không hợp lệ.');
+            simpleAlert('Mật khẩu không hợp lệ.');
         } else {
             apiSignUp(email, name, password)
                 .then(res => res.text())
-                .then(text => this.onReceive(text))
+                .then(text => simpleAlert(text))
                 .catch(err => console.log(err));
         }
     }

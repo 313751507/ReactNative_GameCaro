@@ -3,7 +3,7 @@ import {
     View, Text, TouchableOpacity, Image
 } from 'react-native';
 import { connect } from 'react-redux';
-import { onReceive } from '../Global';
+import { simpleAlert } from '../Global';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import { dangNhapStyles } from './styles';
@@ -19,8 +19,12 @@ class DangNhap extends Component {
 
     componentDidMount() {
         const { socket } = this.props;
-        socket.on('SERVER_SEND_DANG_NHAP_THAT_BAI', data => onReceive(data));
+        socket.on('SERVER_SEND_DANG_NHAP_THAT_BAI', () => this.onDangNhapThatBai());
         socket.on('SERVER_SEND_DANG_NHAP_THANH_CONG', ds => this.onSuccess(ds));
+    }
+
+    onDangNhapThatBai() {
+        simpleAlert('Tên đăng nhập hoặc mật khẩu không hợp lệ.');
     }
 
     onSuccess(ds) {

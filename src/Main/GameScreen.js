@@ -8,35 +8,38 @@ import { mainStyles } from './styles';
 
 class GameScreen extends Component {
   componentDidMount() {
-    const { socket, dispatch } = this.props;
-    socket.on('SERVER_SEND_DS_USERS_ONLINE', ds => {
-      dispatch({ type: 'UPDATE_DS_USER', ds });
-    });
-    socket.on('SERVER_SEND_THACH_DAU', data => {
-      const { id, name } = data;
-      Alert.alert('Thông báo', `${name} thách đấu bạn!`,
-        [{ text: 'Chơi', onPress: () => this.reply(id, 'YES') },
-        { text: 'Thôi', onPress: () => this.reply(id, 'NO') }],
-        { cancelable: false });
-    });
-    socket.on('SERVER_SEND_REPLY', data => {
-      Alert.alert('Thông báo', data,
-        [{ text: 'OK', onPress: () => this.handleThachDau(data) },
-        { cancelable: false }]);
-    });
+    const { socket } = this.props;
+    socket.on('SERVER_SEND_DS_USERS_ONLINE', ds => this.onUserDangNhap(ds));
+    socket.on('SERVER_SEND_THACH_DAU', data => this.onThachDau(data));
+    socket.on('SERVER_SEND_REPLY', data => this.onReply(data));
+  }
+
+  onUserDangNhap(ds) {
+    this.props.dispatch({ type: 'UPDATE_DS_USER', ds });
+  }
+
+  onThachDau(data) {
+    const { id, name } = data;
+    Alert.alert('Thông báo', `${name} thách đấu bạn!`,
+      [{ text: 'Chơi', onPress: () => this.reply(id, 'YES') },
+      { text: 'Thôi', onPress: () => this.reply(id, 'NO') }],
+      { cancelable: false });
+  }
+
+  onReply(result) {
+    let message;
+    if (result === 'YES') {
+      message = 'Đối phương đã chấp nhận.';
+    } else {
+      message = 'Đối phương đã từ chối.';
+    }
+    Alert.alert('Thông báo', message,
+      [{ text: 'OK', onPress: result === 'YES' ? () => this.showRightContainer() : null },
+      { cancelable: false }]);
   }
 
   showRightContainer() {
     this.props.dispatch({ type: 'TOGGLE_PLAYING_STATE' });
-  }
-
-  handleThachDau(result) {
-    if (result === 'YES') {
-      // Dong y thach dau
-      this.showRightContainer();
-    } else {
-      // Tu choi thach dau
-    }
   }
 
   reply(id, result) {

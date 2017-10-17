@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import { signInStyles } from './styles';
+import { simpleAlert } from '../Global';
 
 class SignIn extends Component {
     constructor(props) {
@@ -12,16 +13,10 @@ class SignIn extends Component {
         };
     }
 
-    onReceive(data) {
-        Alert.alert('Thông báo', data,
-            [{ text: 'OK' }],
-            { cancelable: false });
-    }
-
     dangNhap() {
         const { email, password } = this.state;
         if (email === '' || password === '') {
-            this.onReceive('Nhập thông tin đẩy đủ');
+            simpleAlert('Nhập thông tin đẩy đủ');
         }
         this.props.socket.emit('USER_SEND_DANG_NHAP', { email, password });
     }
