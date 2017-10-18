@@ -52,6 +52,14 @@ export const leftContainer = StyleSheet.create({
     },
     stateText: {
         color: 'white'
+    },
+    cancleButton: {
+        borderWidth: 1,
+        borderColor: 'white',
+        padding: 8
+    },
+    cancleText: {
+        color: 'white'
     }
 });
 

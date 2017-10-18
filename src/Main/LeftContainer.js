@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View, Text, FlatList, TouchableOpacity
+    View, Text, FlatList, TouchableOpacity, Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import { leftContainer } from './styles';
@@ -35,6 +35,26 @@ class LeftContainer extends Component {
         }
     }
 
+    cancle() {
+        Alert.alert('Thông báo', 'Xác nhận hủy ván?', [
+            { text: 'Xác nhận', onPress: () => this.acceptTheCancle() },
+            { text: 'Thôi' }
+        ], { cancelable: false });
+    }
+
+    acceptTheCancle() {
+        // Xác nhận hủy ván.
+        /*
+        1. Gửi thông báo lên server.
+        2. Thay đổi trạng thái của màn hình.
+        */
+        const { socket, room, dispatch } = this.props;
+        socket.emit('USER_A_LEAVES_ROOM', room);
+        dispatch({
+            type: 'HUY_VAN_GAME',
+        });
+    }
+
     renderItem(item) {
         const { button, buttonText } = leftContainer;
         return (
@@ -44,9 +64,18 @@ class LeftContainer extends Component {
         );
     }
 
+    renderCancleButton() {
+        const { cancleButton, cancleText } = leftContainer;
+        return (
+            <TouchableOpacity style={cancleButton} onPress={this.cancle.bind(this)}>
+                <Text style={cancleText}>Hủy ván</Text>
+            </TouchableOpacity>
+        );
+    }
+
     render() {
         const {
-            container, title, backButton, backButtonText, stateTextContainer, stateText
+            container, title, backButton, backButtonText, stateTextContainer, stateText,
         } = leftContainer;
         return (
             <View style={container}>
@@ -61,6 +90,7 @@ class LeftContainer extends Component {
                 />
                 <View style={stateTextContainer}>
                     <Text style={stateText}>{this.props.playerState}</Text>
+                    {this.props.isPlaying ? this.renderCancleButton() : null}
                 </View>
             </View>
         );
@@ -72,7 +102,8 @@ function mapStateToProps(state) {
         socket: state.socket,
         ds: state.dsUser,
         isPlaying: state.isPlaying,
-        playerState: state.playerState
+        playerState: state.playerState,
+        room: state.room
     };
 }
 
