@@ -1,6 +1,8 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
+console.log('----------------------------------');
+console.log(width);
 export const dangNhapStyles = StyleSheet.create({
     container: {
         flex: 1,
@@ -40,7 +42,7 @@ export const signInStyles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'white',
         width: width * 0.8,
-        margin: 8,
+        margin: width / 60,
         color: 'white',
         paddingLeft: width * 0.03,
     },

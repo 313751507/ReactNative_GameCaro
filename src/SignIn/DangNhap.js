@@ -19,12 +19,16 @@ class DangNhap extends Component {
 
     componentDidMount() {
         const { socket } = this.props;
-        socket.on('SERVER_SEND_DANG_NHAP_THAT_BAI', () => this.onDangNhapThatBai());
+        socket.on('SERVER_SEND_DANG_NHAP_THAT_BAI', data => this.onDangNhapThatBai(data));
         socket.on('SERVER_SEND_DANG_NHAP_THANH_CONG', ds => this.onSuccess(ds));
     }
 
-    onDangNhapThatBai() {
-        simpleAlert('Tên đăng nhập hoặc mật khẩu không hợp lệ.');
+    onDangNhapThatBai(data) {
+        if (data === 'TK_KHONG_HOP_LE') {
+            simpleAlert('Tên đăng nhập hoặc mật khẩu không hợp lệ.');
+        } else {
+            simpleAlert('Tài khoản đã được đăng nhập ở thiết bị khác.');
+        }
     }
 
     onSuccess(ds) {

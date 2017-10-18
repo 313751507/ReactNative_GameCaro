@@ -41,6 +41,17 @@ export const leftContainer = StyleSheet.create({
     },
     buttonText: {
         color: 'white'
+    },
+    stateTextContainer: {
+        width: width * 0.2,
+        padding: width / 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: 'white',
+        borderWidth: 1
+    },
+    stateText: {
+        color: 'white'
     }
 });
 

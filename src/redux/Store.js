@@ -6,7 +6,8 @@ const defaultState = {
   socket: SocketIOClient(`http://${ipAddress}`),
   dsUser: [],
   isLogin: false,
-  isPlaying: false
+  isPlaying: false,
+  playerState: 'Still free'
 };
 
 const reducer = (state = defaultState, action) => {

@@ -45,7 +45,9 @@ class LeftContainer extends Component {
     }
 
     render() {
-        const { container, title, backButton, backButtonText } = leftContainer;
+        const {
+            container, title, backButton, backButtonText, stateTextContainer, stateText
+        } = leftContainer;
         return (
             <View style={container}>
                 <TouchableOpacity style={backButton} onPress={this.goBack.bind(this)}>
@@ -57,6 +59,9 @@ class LeftContainer extends Component {
                     renderItem={({ item }) => this.renderItem(item)}
                     keyExtractor={item => item.email}
                 />
+                <View style={stateTextContainer}>
+                    <Text style={stateText}>{this.props.playerState}</Text>
+                </View>
             </View>
         );
     }
@@ -66,7 +71,8 @@ function mapStateToProps(state) {
     return {
         socket: state.socket,
         ds: state.dsUser,
-        isPlaying: state.isPlaying
+        isPlaying: state.isPlaying,
+        playerState: state.playerState
     };
 }
 
