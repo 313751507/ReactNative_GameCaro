@@ -19,7 +19,9 @@ class GameScreen extends Component {
   onLeaveRoom(room) {
     const { dispatch, socket } = this.props;
     simpleAlert('Đối phương đã rời khỏi phòng');
-    dispatch({ type: 'HUY_VAN_GAME' });
+    dispatch({ type: 'LEAVE_MATCH' });
+    dispatch({ type: 'TOGGLE_PLAYING_STATE' });
+    dispatch({ type: 'CHANGE_PLAYER_STATE', playerState: '...' });
     socket.emit('USER_B_LEAVE_ROOM', room);
   }
 

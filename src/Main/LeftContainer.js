@@ -50,9 +50,9 @@ class LeftContainer extends Component {
         */
         const { socket, room, dispatch } = this.props;
         socket.emit('USER_A_LEAVES_ROOM', room);
-        dispatch({
-            type: 'HUY_VAN_GAME',
-        });
+        dispatch({ type: 'LEAVE_MATCH' });
+        dispatch({ type: 'TOGGLE_PLAYING_STATE' });
+        dispatch({ type: 'CHANGE_PLAYER_STATE', playerState: '...' });
     }
 
     renderItem(item) {
